@@ -1,7 +1,7 @@
 const PostJobModel = require('./PostJob');
 const CompanyModel = require('../company/Company');
 
-const postJob = async(req, res, next) => {
+const createPost = async(req, res, next) => {
     try {
         const {
             jobType,
@@ -42,6 +42,8 @@ const postJob = async(req, res, next) => {
 }
 const getJobs = async(req, res, next) => {
     try {
+        const jobs = await PostJobModel.find();
+        res.send({ success: 1, data: jobs });
 
     } catch (error) {
         res.send({ success: 0, message: error.message });
@@ -50,4 +52,4 @@ const getJobs = async(req, res, next) => {
 }
 
 
-module.exports = { postJob }
+module.exports = { createPost, getJobs }

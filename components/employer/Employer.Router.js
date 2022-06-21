@@ -1,8 +1,8 @@
 const employer = require('./Employer.Controller');
 const router = require('express').Router();
-const auth = require('../auth/Auth.VerifyToken');
-const Company = require('../company/VerifyCompany');
+const auth = require('../middleware/VerifyToken');
+const middleware = require('../middleware/VerifyCompany');
 
-router.post('/create/update/employer', auth.verifyToken, Company.verifyCompany, employer.createEmployer);
+router.post('/create/update/employer', auth.verifyToken, middleware.verifyCompany, employer.createEmployer);
 
 module.exports = router;

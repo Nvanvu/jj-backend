@@ -1,7 +1,10 @@
 const router = require('express').Router();
-const postJob = require('./PostJob.Controller');
-const auth = require('../auth/Auth.VerifyToken');
-const verify = require('../company/VerifyCompany');
+const job = require('./PostJob.Controller');
+const auth = require('../middleware/VerifyToken');
+const middleware = require('../middleware/VerifyCompany');
 
-router.post('/post/j', auth.verifyToken, verify.verifyCompany, postJob.postJob)
+router.post('/create/j', auth.verifyToken, middleware.verifyCompany, job.createPost);
+router.get('/g/j/list', job.getJobs);
+
+
 module.exports = router;
