@@ -31,13 +31,23 @@ const postJob = async(req, res, next) => {
             qualification,
             workExperience,
             requirenment,
-            createdBy,
-            company
+            createdBy: req.user._id,
+            company: existedCompany._id
         });
-        res.send({})
+        res.send({ success: 1, data: newJob });
     } catch (error) {
         res.send({ status: 400, success: 0, message: error.message });
         return;
     }
 }
+const getJobs = async(req, res, next) => {
+    try {
+
+    } catch (error) {
+        res.send({ success: 0, message: error.message });
+        return;
+    }
+}
+
+
 module.exports = { postJob }

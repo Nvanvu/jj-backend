@@ -1,6 +1,7 @@
 const UserModel = require('../user/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { response } = require('express');
 
 const register = async(req, res, next) => {
     try {
@@ -10,15 +11,20 @@ const register = async(req, res, next) => {
             tel,
             role
         } = req.body;
+        const existedUsername = await UserModel.findOne({ username });
+        if (existedUsername) {
+            res.send({ status: 503, success: 1, message: 'User name dulicated.' });
+            return;
+        }
 
         const existedEmail = await UserModel.findOne({ email });
         if (existedEmail) {
-            res.send({ status: 501, success: 0, message: 'Email duplicated.' });
+            res.send({ status: 501, success: 1, message: 'Email duplicated.' });
             return;
         }
         const existedTel = await UserModel.findOne({ tel });
         if (existedTel) {
-            res.send({ status: 502, success: 0, message: 'Tel duplicated.' });
+            res.send({ status: 502, success: 1, message: 'Tel duplicated.' });
             return;
         }
 
@@ -42,7 +48,7 @@ const register = async(req, res, next) => {
         })
 
     } catch (error) {
-        res.send({ success: 0, message: error })
+        res.send({ success: 0, message: error.message })
         return;
     }
 }

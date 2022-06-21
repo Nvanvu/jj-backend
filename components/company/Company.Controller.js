@@ -1,7 +1,6 @@
 const CompanyModel = require('../company/Company');
 const createCompany = async(req, res, next) => {
     try {
-
         const {
             companyName,
             inauguration,
@@ -41,4 +40,18 @@ const createCompany = async(req, res, next) => {
         return;
     }
 }
-module.exports = { createCompany }
+const getCompanys = async(req, res, next) => {
+    try {
+        const companys = await CompanyModel.find();
+        res.send({ success: 1, data: companys });
+    } catch (error) {
+        res.send({ status: 400, success: 0, message: error.message });
+        return;
+    }
+}
+
+
+module.exports = {
+    createCompany,
+    getCompanys
+}

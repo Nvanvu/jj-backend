@@ -8,6 +8,7 @@ const company = require('./components/company/Company.Router');
 const employer = require('./components/employer/Employer.Router');
 const employee = require('./components/employee/Employee.Router');
 const uploadFile = require('./components/uploadFile/UploadFile.Router');
+const postJob = require('./components/postJob/PostJob.Router');
 
 
 const app = express();
@@ -19,6 +20,7 @@ app.use('/v', company);
 app.use('/v', employer);
 app.use('/v', employee);
 app.use('/v', uploadFile);
+app.use('/v', postJob);
 
 
 mongoose.connect(process.env.mongoDB, err => {
