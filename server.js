@@ -25,7 +25,7 @@ app.use('/v', postJob);
 
 mongoose.connect(process.env.mongoDB, err => {
     if (err) {
-        return console.log('Err connect mongodb', err);
+        return console.log('Connect mongoDB failed. ', err);
     }
     console.log('Connect mongoDB successful.');
 })

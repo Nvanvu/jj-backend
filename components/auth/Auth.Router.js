@@ -1,7 +1,10 @@
 const auth = require('../auth/Auth.Controller');
 const router = require('express').Router();
+const { registerSchema, loginSchema } = require('../auth/Auth.validate')
 
-router.post('/auth/register/user', auth.register);
-router.post('/auth/login', auth.login);
+const validateInput = require('../middleware/validateInput');
+
+router.post('/auth/register/user', validateInput(registerSchema, 'body'), auth.register);
+router.post('/auth/login', validateInput(loginSchema, 'body'), auth.login);
 
 module.exports = router;
