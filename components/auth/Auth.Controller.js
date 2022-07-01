@@ -1,7 +1,6 @@
 const UserModel = require('../user/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { response } = require('express');
 
 const register = async(req, res, next) => {
     try {
@@ -11,11 +10,6 @@ const register = async(req, res, next) => {
             tel,
             role
         } = req.body;
-        const existedUsername = await UserModel.findOne({ username });
-        if (existedUsername) {
-            res.send({ status: 503, success: 1, message: 'User name dulicated.' });
-            return;
-        }
 
         const existedEmail = await UserModel.findOne({ email });
         if (existedEmail) {
@@ -27,7 +21,10 @@ const register = async(req, res, next) => {
             res.send({ status: 502, success: 1, message: 'Tel duplicated.' });
             return;
         }
-
+        if (!['user', 'company'].includes(role)) {
+            res.send({ status: 500, success: 0, message: 'Invalid role.' })
+            return;
+        }
         const salt = await bcrypt.genSalt(10);
         const hashed = await bcrypt.hash(password, salt);
         const newUser = await UserModel.create({

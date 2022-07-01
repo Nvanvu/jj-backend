@@ -7,7 +7,6 @@ const validateInput = (schema, property) => {
         } else {
             const { details } = error;
             const message = details.map(i => i.message).join(',');
-            console.log('error', message);
 
             res.send({ status: 422, message: message });
             return;
